@@ -5,14 +5,16 @@ module Bank
     end
 
     def show
-      set_account
+      @account = find_by params[:id]
     end
 
     def new
       @account = ::Bank::Account.new
     end
 
-    def edit; end
+    def edit
+      @account = find_by params[:id]
+    end
 
     def create
       creator = ::Bank::CreateAccount.new(user_id: 1)
@@ -28,22 +30,21 @@ module Bank
       end
     end
 
-    def update
+    def destroy
+      @account = find_by params[:id]
+
+      @account.destroy
+
       respond_to do |format|
-        if @account.update(account_params)
-          format.html { redirect_to bank_account_url(@account), notice: 'Account was successfully updated.' }
-          format.json { render :show, status: :ok, location: @account }
-        else
-          format.html { render :edit, status: :unprocessable_entity }
-          format.json { render json: @account.errors, status: :unprocessable_entity }
-        end
+        format.html { redirect_to bank_accounts_url, notice: 'Account was successfully destroyed.' }
+        format.json { head :no_content }
       end
     end
 
     private
 
-    def set_account
-      @account = ::Bank::Account.find(params[:id])
+    def find_by id
+      ::Bank::Account.find(id)
     end
   end
 end

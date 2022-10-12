@@ -44,4 +44,24 @@ RSpec.describe ::Bank::AccountsController, type: :request do
       end
     end
   end
+
+  describe 'DELETE /destroy' do
+    context 'when user wants close account' do
+      it 'destroys the requested account' do
+        account = create(:bank_account)
+
+        expect do
+          delete bank_account_url(account)
+        end.to change(::Bank::Account, :count).by(-1)
+      end
+
+      it 'redirects to the accounts list' do
+        account = create(:bank_account)
+
+        delete bank_account_url(account)
+
+        expect(response).to redirect_to(bank_accounts_url)
+      end
+    end
+  end
 end
