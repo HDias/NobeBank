@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_12_123137) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_12_142741) do
   create_table "bank_accounts", force: :cascade do |t|
     t.integer "account_number", null: false
     t.string "agency", null: false
@@ -21,6 +21,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_123137) do
     t.index ["account_number", "agency"], name: "index_bank_accounts_on_account_number_and_agency", unique: true
     t.index ["deleted_at"], name: "index_bank_accounts_on_deleted_at"
     t.index ["user_id"], name: "index_bank_accounts_on_user_id"
+  end
+
+  create_table "bank_transactions", force: :cascade do |t|
+    t.string "description"
+    t.string "kind", null: false
+    t.integer "value", null: false
+    t.integer "bank_account_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bank_account_id"], name: "index_bank_transactions_on_bank_account_id"
+    t.index ["kind"], name: "index_bank_transactions_on_kind"
+    t.index ["user_id"], name: "index_bank_transactions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -39,4 +52,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_123137) do
   end
 
   add_foreign_key "bank_accounts", "users"
+  add_foreign_key "bank_transactions", "bank_accounts"
+  add_foreign_key "bank_transactions", "users"
 end

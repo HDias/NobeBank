@@ -6,6 +6,6 @@ RSpec.describe User, type: :model do
   end
 
   describe 'associations' do
-    specify { is_expected.to have_many(:bank_accounts) }
+    specify { is_expected.to have_many(:bank_accounts).class_name('::Bank::Account') }
   end
 end
