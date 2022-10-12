@@ -69,6 +69,8 @@ group :development do
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
+  gem 'rails_db', '>= 2.3.1'
+
   gem 'rubocop', '~> 1.32', require: false
   gem 'solargraph'
 
