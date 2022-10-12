@@ -1,5 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'soft_delete' do
+    specify { is_expected.to act_as_paranoid }
+  end
 end
