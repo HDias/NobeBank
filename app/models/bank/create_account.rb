@@ -16,6 +16,8 @@ module Bank
     end
 
     def save
+      return unless valid?
+
       @account_model.save!
     end
   end

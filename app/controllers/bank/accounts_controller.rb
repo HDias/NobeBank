@@ -20,7 +20,7 @@ module Bank
       creator = ::Bank::CreateAccount.new(user_id: 1)
 
       respond_to do |format|
-        if creator.valid? && creator.save
+        if creator.save
           format.html { redirect_to bank_account_url(creator.account_model), notice: 'Account was successfully created.' }
           format.json { render :show, status: :created, location: creator.account_model }
         else
