@@ -1,9 +1,9 @@
 class CreateBankAccount < ActiveRecord::Migration[7.0]
   def change
     create_table :bank_accounts do |t|
-      t.integer :account_number
-      t.string :agency
-      t.integer :user_id
+      t.integer :account_number, null: false
+      t.string :agency, null: false
+      t.belongs_to :user, null: false, foreign_key: true, index: true
 
       t.timestamps
     end
