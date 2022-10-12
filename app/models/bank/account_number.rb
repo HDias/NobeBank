@@ -1,9 +1,7 @@
 module Bank
   class AccountNumber
-    def self.generate(account_id)
-      uniq_number = Random.new.bytes(5).bytes.join[0,5]
-
-      "#{uniq_number}#{account_id}".to_i
+    def self.generate
+      Random.new.bytes(5).bytes.join[0, 6]
     end
   end
 end
