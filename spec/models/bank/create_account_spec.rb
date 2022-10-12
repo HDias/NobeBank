@@ -5,7 +5,7 @@ RSpec.describe ::Bank::CreateAccount do
     specify do
       user = create(:user)
 
-      creator = described_class.new(user_id: user)
+      creator = described_class.new(user_id: user.id)
 
       expect(creator.valid?).to be_truthy
     end
@@ -15,7 +15,7 @@ RSpec.describe ::Bank::CreateAccount do
     specify do
       user = create(:user)
 
-      creator = described_class.new(user_id: user)
+      creator = described_class.new(user_id: user.id)
 
       expect{ creator.save }.to change(::Bank::Account, :count).by(1)
     end

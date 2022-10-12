@@ -17,7 +17,7 @@ module Bank
     end
 
     def create
-      creator = ::Bank::CreateAccount.new(user_id: 1)
+      creator = ::Bank::CreateAccount.new(user_id: current_user.id)
 
       respond_to do |format|
         if creator.save
