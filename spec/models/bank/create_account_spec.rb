@@ -17,7 +17,7 @@ RSpec.describe ::Bank::CreateAccount do
 
       creator = described_class.new(user_id: user.id)
 
-      expect{ creator.save }.to change(::Bank::Account, :count).by(1)
+      expect { creator.save }.to change(::Bank::Account, :count).by(1)
     end
   end
 end

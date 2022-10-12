@@ -21,7 +21,9 @@ module Bank
 
       respond_to do |format|
         if creator.save
-          format.html { redirect_to bank_account_url(creator.account_model), notice: 'Account was successfully created.' }
+          format.html do
+            redirect_to bank_account_url(creator.account_model), notice: 'Account was successfully created.'
+          end
           format.json { render :show, status: :created, location: creator.account_model }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +45,7 @@ module Bank
 
     private
 
-    def find_by id
+    def find_by(id)
       ::Bank::Account.find(id)
     end
   end
