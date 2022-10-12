@@ -63,8 +63,12 @@ group :development do
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
+  gem 'rubocop', '~> 1.32', require: false
+  gem 'solargraph'
+
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   gem "spring"
+
 end
 
 group :test do
