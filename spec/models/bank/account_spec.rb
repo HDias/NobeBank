@@ -11,4 +11,8 @@ RSpec.describe ::Bank::Account, type: :model do
 
     specify { should validate_uniqueness_of(:account_number).scoped_to(:agency) }
   end
+
+  describe 'associations' do
+    specify { is_expected.to belong_to(:user) }
+  end
 end

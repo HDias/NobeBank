@@ -12,14 +12,15 @@
 
 ActiveRecord::Schema[7.0].define(version: 2022_10_12_123137) do
   create_table "bank_accounts", force: :cascade do |t|
-    t.integer "account_number"
-    t.string "agency"
-    t.integer "user_id"
+    t.integer "account_number", null: false
+    t.string "agency", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.index ["account_number", "agency"], name: "index_bank_accounts_on_account_number_and_agency", unique: true
     t.index ["deleted_at"], name: "index_bank_accounts_on_deleted_at"
+    t.index ["user_id"], name: "index_bank_accounts_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -37,4 +38,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_123137) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "bank_accounts", "users"
 end

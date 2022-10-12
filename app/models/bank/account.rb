@@ -1,5 +1,7 @@
 module Bank
   class Account < ApplicationRecord
+    belongs_to :user
+
     validates :agency, presence: true
     validates :account_number, presence: true
 
