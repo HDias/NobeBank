@@ -14,6 +14,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_142741) do
   create_table "bank_accounts", force: :cascade do |t|
     t.integer "account_number", null: false
     t.string "agency", null: false
+    t.integer "balance", default: 0, null: false
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

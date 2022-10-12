@@ -9,7 +9,9 @@ RSpec.describe ::Bank::Account, type: :model do
     specify { is_expected.to validate_presence_of(:agency) }
     specify { is_expected.to validate_presence_of(:account_number) }
 
-    specify { should validate_uniqueness_of(:account_number).scoped_to(:agency) }
+    specify { is_expected.to validate_uniqueness_of(:account_number).scoped_to(:agency) }
+
+    specify { is_expected.to validate_numericality_of(:balance).is_greater_than_or_equal_to(0) }
   end
 
   describe 'associations' do

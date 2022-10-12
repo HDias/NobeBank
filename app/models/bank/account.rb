@@ -7,6 +7,8 @@ module Bank
 
     validates :account_number, uniqueness: { scope: :agency }
 
+    validates :balance, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
     acts_as_paranoid
   end
 end
