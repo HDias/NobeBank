@@ -152,6 +152,8 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     parallel (1.22.1)
+    paranoia (2.6.0)
+      activerecord (>= 5.1, < 7.1)
     parser (3.1.2.1)
       ast (~> 2.4.1)
     public_suffix (5.0.0)
@@ -316,6 +318,7 @@ DEPENDENCIES
   faker
   importmap-rails
   jbuilder
+  paranoia (= 2.6.0)
   puma (~> 5.0)
   rails (~> 7.0.4)
   rspec-rails (~> 6.0.0)

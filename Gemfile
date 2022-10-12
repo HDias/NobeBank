@@ -33,8 +33,9 @@ gem "jbuilder"
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
+# ActiveModel & ActiveRecord extensions
 gem "bcrypt", "~> 3.1.7"
+gem 'paranoia', '2.6.0'
 
 # Authentication
 gem 'devise'
