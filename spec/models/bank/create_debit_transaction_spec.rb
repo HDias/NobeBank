@@ -68,7 +68,7 @@ RSpec.describe ::Bank::CreateDebitTransaction do
           expect { debit_creator.make(value: debit_value, nickname: 'withdrawal') }.to change(::Bank::Transaction, :count).by(1)
         end
 
-        it 'expect create bank_transaction with status sucess' do
+        it 'expect create bank_transaction with status success' do
           account = create(:bank_account, balance: 1)
           user    = create(:user)
 
