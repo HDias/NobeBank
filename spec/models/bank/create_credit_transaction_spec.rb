@@ -8,8 +8,18 @@ RSpec.describe ::Bank::CreateCreditTransaction do
 
   describe '.make' do
     context 'failure' do
-      context 'when nickname is deposit' do
-        xit 'expect raise expection'
+      context 'when try make credit transaction how withdrawal' do
+        specify do
+          account = create(:bank_account, balance: 1)
+          user    = create(:user)
+
+          credit_creator = described_class.new(account_id: account.id, user_id: user.id)
+          credit_value   = 1
+
+          expect do
+            credit_creator.make(value: credit_value, nickname: 'withdrawal')
+          end.to raise_error(ActiveRecord::RecordInvalid, /withdrawal is not valid to credit transaction/).and change(::Bank::Transaction, :count).by(0)
+        end
       end
 
       context 'when account has been destroyed' do

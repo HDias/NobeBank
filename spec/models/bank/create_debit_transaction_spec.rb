@@ -8,8 +8,18 @@ RSpec.describe ::Bank::CreateDebitTransaction do
 
   describe '.make' do
     context 'failure' do
-      context 'when nickname is deposit' do
-        xit 'expect raise expection'
+      context 'when try make debit transaction how deposit' do
+        specify do
+          account = create(:bank_account, balance: 1)
+          user    = create(:user)
+
+          debit_creator = described_class.new(account_id: account.id, user_id: user.id)
+          debit_value   = 1
+
+          expect do
+            debit_creator.make(value: debit_value, nickname: 'deposit')
+          end.to raise_error(ActiveRecord::RecordInvalid).and change(::Bank::Transaction, :count).by(0)
+        end
       end
 
       context 'when account balance is 0 and try debit value' do

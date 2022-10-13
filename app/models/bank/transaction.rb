@@ -14,5 +14,15 @@ module Bank
     validates :value, numericality: { only_integer: true, greater_than: 0 }
 
     validates :description, length: { maximum: 255 }
+
+    validates :nickname, exclusion: {
+      in: ['withdrawal'],
+      message: 'withdrawal is not valid to credit transaction'
+    }, if: -> { credit_kind? }
+
+    validates :nickname, exclusion: {
+      in: ['deposit'],
+      message: 'deposit is not valid to debit transaction'
+    }, if: -> { debit_kind? }
   end
 end

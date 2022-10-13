@@ -1,5 +1,7 @@
 module Bank
   class CreateCreditTransaction
+    KIND = 'credit'.freeze
+
     attr_reader :transaction_model
 
     def initialize(account_id:, user_id:, transaction_model: ::Bank::Transaction)
@@ -31,7 +33,7 @@ module Bank
     end
 
     def transaction(status:, value:, nickname:, description: nil)
-      @transaction_model.kind            = 'debit'
+      @transaction_model.kind            = KIND
       @transaction_model.status          = status
       @transaction_model.nickname        = nickname
       @transaction_model.description     = description

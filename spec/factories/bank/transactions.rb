@@ -1,26 +1,25 @@
 FactoryBot.define do
-  kinds = Bank::Transaction.kinds.keys
   statuses = Bank::Transaction.statuses.keys
-  nicknames = Bank::Transaction.nicknames.keys
 
-  factory :bank_transaction, class: 'Bank::Transaction' do
-    kind { kinds.sample }
+  factory :bank_credit_transaction, class: 'Bank::Transaction' do
+    kind { :credit }
     status { statuses.sample }
-    nickname { nicknames.sample }
+    nickname { %i[deposit transfer].sample }
     description { Faker::Lorem.paragraph }
     value { rand(1..100) }
 
     bank_account
     user
+  end
 
-    trait :kind_credit do
-      kind { :credit }
-    end
-    trait :kind_debit do
-      kind { :debit }
-    end
+  factory :bank_debit_transaction, class: 'Bank::Transaction' do
+    kind { :debit }
+    status { statuses.sample }
+    nickname { %i[withdrawal transfer].sample }
+    description { Faker::Lorem.paragraph }
+    value { rand(1..100) }
 
-    factory :bank_transaction_credit, traits: [:kind_credit]
-    factory :bank_transaction_debit, traits: [:kind_debit]
+    bank_account
+    user
   end
 end
