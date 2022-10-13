@@ -2,6 +2,16 @@ require 'rails_helper'
 
 RSpec.describe ::Bank::Transaction, type: :model do
   describe 'validations' do
+    # nickname
+    specify { is_expected.to validate_presence_of(:kind) }
+    specify do
+      is_expected.to define_enum_for(:nickname).with_values(
+        deposit: 'deposit',
+        withdrawal: 'withdrawal',
+        transfer: 'transfer'
+      ).backed_by_column_of_type(:string)
+    end
+
     # kind
     specify { is_expected.to validate_presence_of(:kind) }
     specify do

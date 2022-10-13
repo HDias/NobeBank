@@ -1,10 +1,12 @@
 FactoryBot.define do
   kinds = Bank::Transaction.kinds.keys
   statuses = Bank::Transaction.statuses.keys
+  nicknames = Bank::Transaction.nicknames.keys
 
   factory :bank_transaction, class: 'Bank::Transaction' do
     kind { kinds.sample }
     status { statuses.sample }
+    nickname { nicknames.sample }
     description { Faker::Lorem.paragraph }
     value { rand(1..100) }
 

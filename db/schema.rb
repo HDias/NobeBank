@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_142741) do
   create_table "bank_transactions", force: :cascade do |t|
     t.string "description"
     t.string "kind", null: false
+    t.string "nickname", null: false
     t.string "status", null: false
     t.integer "value", null: false
     t.integer "bank_account_id", null: false
@@ -35,6 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_142741) do
     t.datetime "updated_at", null: false
     t.index ["bank_account_id"], name: "index_bank_transactions_on_bank_account_id"
     t.index ["kind"], name: "index_bank_transactions_on_kind"
+    t.index ["nickname"], name: "index_bank_transactions_on_nickname"
     t.index ["status"], name: "index_bank_transactions_on_status"
     t.index ["user_id"], name: "index_bank_transactions_on_user_id"
   end

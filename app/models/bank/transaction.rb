@@ -1,6 +1,7 @@
 module Bank
   class Transaction < ApplicationRecord
     enum kind: { credit: 'credit', debit: 'debit' }, _suffix: true
+    enum nickname: { deposit: 'deposit', withdrawal: 'withdrawal', transfer: 'transfer' }
     enum status: { success: 'success', error: 'error' }, _suffix: true
 
     belongs_to :bank_account, class_name: '::Bank::Account'

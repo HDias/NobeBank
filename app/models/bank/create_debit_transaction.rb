@@ -1,6 +1,6 @@
 module Bank
-  class CreateTransaction
-    attr_reader :transaction_model, :bank_account
+  class CreateDebitTransaction
+    attr_reader :transaction_model, :bank_account, :nickname
 
     def initialize(bank_account:, user:, transaction_model: ::Bank::Transaction)
       raise ArgumentError, "bank_account can be '::Bank::Account' model" unless bank_account.is_a?(::Bank::Account)
@@ -11,24 +11,27 @@ module Bank
       @user              = user
     end
 
-    def debit(value)
-      verify_and_make_balance(value)
+    def make(value:, nickname:)
+      ActiveRecord::Base.transaction do
+        verify_and_make_balance(value, nickname)
+      end
     end
 
     private
 
-    def verify_and_make_balance(value)
+    def verify_and_make_balance(value, nickname)
       raise ::Bank::InsufficientFundsError if @bank_account.balance < value
 
       @bank_account.balance = @bank_account.balance - value
       @bank_account.save!
 
-      transaction(status: 'success', value:).save!
+      transaction(status: 'success', value:, nickname:).save!
     end
 
-    def transaction(status:, value:, description: nil)
+    def transaction(status:, value:, nickname:, description: nil)
       @transaction_model.kind         = 'debit'
       @transaction_model.status       = status
+      @transaction_model.nickname     = nickname
       @transaction_model.description  = description
       @transaction_model.value        = value
       @transaction_model.bank_account = @bank_account
