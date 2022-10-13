@@ -17,7 +17,7 @@ RSpec.describe ::Bank::CreateDebitTransaction do
           account = create(:bank_account, balance: 0)
           user    = create(:user)
 
-          debit_creator = described_class.new(account_id: account.id, user:)
+          debit_creator = described_class.new(account_id: account.id, user_id: user.id)
           debit_value   = 1
 
           expect do
@@ -32,7 +32,7 @@ RSpec.describe ::Bank::CreateDebitTransaction do
           user    = create(:user)
           account.destroy!
 
-          debit_creator = described_class.new(account_id: account.id, user:)
+          debit_creator = described_class.new(account_id: account.id, user_id: user.id)
           debit_value   = 1
 
           expect do
@@ -46,7 +46,7 @@ RSpec.describe ::Bank::CreateDebitTransaction do
           account = create(:bank_account, balance: 0)
           user    = create(:user)
 
-          credit_creator = described_class.new(account_id: account.id, user:)
+          credit_creator = described_class.new(account_id: account.id, user_id: user.id)
           credit_value   = -1
 
           expect do
@@ -62,7 +62,7 @@ RSpec.describe ::Bank::CreateDebitTransaction do
           account = create(:bank_account, balance: 1)
           user    = create(:user)
 
-          debit_creator = described_class.new(account_id: account.id, user:)
+          debit_creator = described_class.new(account_id: account.id, user_id: user.id)
           debit_value   = 1
 
           expect { debit_creator.make(value: debit_value, nickname: 'withdrawal') }.to change(::Bank::Transaction, :count).by(1)
@@ -73,7 +73,7 @@ RSpec.describe ::Bank::CreateDebitTransaction do
           user    = create(:user)
 
           debit_value   = 1
-          debit_creator = described_class.new(account_id: account.id, user:)
+          debit_creator = described_class.new(account_id: account.id, user_id: user.id)
           debit_creator.make(value: debit_value, nickname: 'withdrawal')
 
           expect(debit_creator.transaction_model.success_status?).to be_truthy

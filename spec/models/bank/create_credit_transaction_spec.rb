@@ -18,7 +18,7 @@ RSpec.describe ::Bank::CreateCreditTransaction do
           user    = create(:user)
           account.destroy!
 
-          credit_creator = described_class.new(account_id: account.id, user:)
+          credit_creator = described_class.new(account_id: account.id, user_id: user.id)
           credit_value   = 1
 
           expect do
@@ -32,7 +32,7 @@ RSpec.describe ::Bank::CreateCreditTransaction do
           account = create(:bank_account, balance: 1)
           user    = create(:user)
 
-          credit_creator = described_class.new(account_id: account.id, user:)
+          credit_creator = described_class.new(account_id: account.id, user_id: user.id)
           credit_value   = -1
 
           expect do
@@ -60,7 +60,7 @@ RSpec.describe ::Bank::CreateCreditTransaction do
           user    = create(:user)
 
           credit_value   = 1
-          credit_creator = described_class.new(account_id: account.id, user:)
+          credit_creator = described_class.new(account_id: account.id, user_id: user.id)
           credit_creator.make(value: credit_value, nickname: 'deposit')
 
           expect(credit_creator.transaction_model.success_status?).to be_truthy
