@@ -1,5 +1,5 @@
 module Bank
-  class CreateDebitTransaction
+  class CreateCreditTransaction
     attr_reader :transaction_model, :account_id, :nickname
 
     def initialize(account_id:, user:, transaction_model: ::Bank::Transaction)
@@ -13,13 +13,13 @@ module Bank
 
     def make(value:, nickname:)
       ActiveRecord::Base.transaction do
-        verify_and_make_balance(value, nickname)
+        make_balance(value, nickname)
       end
     end
 
     private
 
-    def verify_and_make_balance(value, nickname)
+    def make_balance(value, nickname)
       raise ::Bank::NegativeValueError if value <= 0
 
       bank_account = ::Bank::Account.find(@account_id)
@@ -36,9 +36,9 @@ module Bank
       @transaction_model.kind         = 'debit'
       @transaction_model.status       = status
       @transaction_model.nickname     = nickname
-      @transaction_model.description     = description
-      @transaction_model.value           = value
-      @transaction_model.bank_account_id = @account_id
+      @transaction_model.description  = description
+      @transaction_model.value        = value
+      @transaction_model.account_id = @account_id
       @transaction_model.user         = @user
 
       @transaction_model

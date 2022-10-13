@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ::Bank::CreateDebitTransaction do
+RSpec.describe ::Bank::CreateCreditTransaction do
   context 'when initialize with wrong argument' do
     specify { expect { described_class.new(account_id: User.first) }.to raise_error(ArgumentError) }
     specify { expect { described_class.new(account_id: ::Bank::Account) }.to raise_error(ArgumentError) }
@@ -8,22 +8,8 @@ RSpec.describe ::Bank::CreateDebitTransaction do
 
   describe '.make' do
     context 'failure' do
-      context 'when nickname is deposit' do
+      context 'when nickname is withdrawal' do
         xit 'expect raise expection'
-      end
-
-      context 'when account balance is 0 and try debit value' do
-        specify do
-          account = create(:bank_account, balance: 0)
-          user    = create(:user)
-
-          debit_creator = described_class.new(account_id: account.id, user:)
-          debit_value   = 1
-
-          expect do
-            debit_creator.make(value: debit_value, nickname: 'withdrawal')
-          end.to raise_error(::Bank::InsufficientFundsError).and change(::Bank::Transaction, :count).by(0)
-        end
       end
 
       context 'when account has been destroyed' do
@@ -32,25 +18,25 @@ RSpec.describe ::Bank::CreateDebitTransaction do
           user    = create(:user)
           account.destroy!
 
-          debit_creator = described_class.new(account_id: account.id, user:)
-          debit_value   = 1
+          credit_creator = described_class.new(account_id: account.id, user:)
+          credit_value   = 1
 
           expect do
-            debit_creator.make(value: debit_value, nickname: 'withdrawal')
+            credit_creator.make(value: credit_value, nickname: 'deposit')
           end.to raise_error(ActiveRecord::RecordNotFound).and change(::Bank::Transaction, :count).by(0)
         end
       end
 
       context 'when value is negative' do
         specify do
-          account = create(:bank_account, balance: 0)
+          account = create(:bank_account, balance: 1)
           user    = create(:user)
 
           credit_creator = described_class.new(account_id: account.id, user:)
           credit_value   = -1
 
           expect do
-            credit_creator.make(value: credit_value, nickname: 'withdrawal')
+            credit_creator.make(value: credit_value, nickname: 'deposit')
           end.to raise_error(::Bank::NegativeValueError).and change(::Bank::Transaction, :count).by(0)
         end
       end
@@ -62,21 +48,21 @@ RSpec.describe ::Bank::CreateDebitTransaction do
           account = create(:bank_account, balance: 1)
           user    = create(:user)
 
-          debit_creator = described_class.new(account_id: account.id, user:)
-          debit_value   = 1
+          credit_creator = described_class.new(account_id: account.id, user:)
+          credit_value   = 1
 
-          expect { debit_creator.make(value: debit_value, nickname: 'withdrawal') }.to change(::Bank::Transaction, :count).by(1)
+          expect { credit_creator.make(value: credit_value, nickname: 'withdrawal') }.to change(::Bank::Transaction, :count).by(1)
         end
 
         it 'expect create bank_transaction with status sucess' do
           account = create(:bank_account, balance: 1)
           user    = create(:user)
 
-          debit_value   = 1
-          debit_creator = described_class.new(account_id: account.id, user:)
-          debit_creator.make(value: debit_value, nickname: 'withdrawal')
+          credit_value   = 1
+          credit_creator = described_class.new(account_id: account.id, user:)
+          credit_creator.make(value: credit_value, nickname: 'withdrawal')
 
-          expect(debit_creator.transaction_model.success_status?).to be_truthy
+          expect(credit_creator.transaction_model.success_status?).to be_truthy
         end
       end
     end
