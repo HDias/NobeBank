@@ -1,24 +1,16 @@
 module Bank
-  class AccountsController < ApplicationController
-    def index
-      @accounts = ::Bank::Account.all
-    end
-
-    def show
-      @account = find_by params[:id]
-    end
-
+  class TranfersController < ApplicationController
     def new
-      @account = ::Bank::Account.new
+      @account = ::Bank::Transaction.new
     end
 
     def create
-      creator = ::Bank::CreateAccount.new(user_id: current_user.id)
+      creator = ::Bank::CreateTransaction.new(user_id: current_user.id)
 
       respond_to do |format|
         if creator.save
           format.html do
-            redirect_to bank_account_url(creator.account_model), notice: 'Account was successfully created.'
+            redirect_to bank_account_url(creator.account_model), notice: 'Transaction was successfully created.'
           end
           format.json { render :show, status: :created, location: creator.account_model }
         else
@@ -34,7 +26,7 @@ module Bank
       @account.destroy
 
       respond_to do |format|
-        format.html { redirect_to bank_accounts_url, notice: 'Account was successfully destroyed.' }
+        format.html { redirect_to bank_accounts_url, notice: 'Transaction was successfully destroyed.' }
         format.json { head :no_content }
       end
     end
@@ -42,7 +34,7 @@ module Bank
     private
 
     def find_by(id)
-      ::Bank::Account.find(id)
+      ::Bank::Transaction.find(id)
     end
   end
 end

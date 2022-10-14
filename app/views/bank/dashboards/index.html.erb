@@ -1,0 +1,14 @@
+
+<div class="alert alert-primary" role="alert">
+  A simple primary alert—check it out!
+</div>
+
+<p style="color: green"><%= notice %></p>
+
+<% @accounts.each do |course| %>
+  <ul>
+    <li></li>
+  </ul>
+<% end.empty? and begin %>
+  <%= link_to "Crie sua primeira conta", new_bank_account_path %>
+<% end %>

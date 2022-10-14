@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   namespace :bank do
     resources :accounts, except: %i[edit update]
+    resources :dashboards, only: %i[index]
   end
 
   # Defines the root path route ("/")
-  # root "articles#index"
 end
