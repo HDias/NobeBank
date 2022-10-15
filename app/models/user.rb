@@ -10,4 +10,8 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true
 
   acts_as_paranoid
+
+  def first_name
+    name.split.first
+  end
 end

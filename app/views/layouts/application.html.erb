@@ -11,6 +11,14 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header class="sticky-top">
+      <section>
+        <%= render 'layouts/nav_bar' %>
+      </section>
+    </header>
+
+    <main class="container">
+      <%= yield %>
+    </main>
   </body>
 </html>
