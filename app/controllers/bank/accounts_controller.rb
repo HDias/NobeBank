@@ -1,5 +1,5 @@
 module Bank
-  class AccountsController < ApplicationController
+  class AccountsController < BaseController
     def index
       @accounts = ::Bank::Account.all
     end

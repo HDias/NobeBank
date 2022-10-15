@@ -8,6 +8,16 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
+  .error {
+    color: black;
+    padding-left: 5px;
+  }
+
+  .error_notification {
+    color: black;
+    font-weight: bold;
+  }
 }
 
 .font-crimson {

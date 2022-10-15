@@ -1,5 +1,5 @@
 module Bank
-  class DepositsController < ApplicationController
+  class DepositsController < BaseController
     def new
       @account = ::Bank::Transaction.new
     end
