@@ -10,5 +10,7 @@ module Bank
     validates :balance, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
     acts_as_paranoid
+
+    scope :owner, ->(user_id) { where(user_id: user_id) }
   end
 end

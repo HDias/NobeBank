@@ -1,2 +1,33 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+/* begin home */
+.home_background {
+  background: url("background.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.font-crimson {
+  font-family: 'Crimson Text', serif;
+}
+/* end home */
+
+.vh {
+  &-100 {
+    height: 100vh;
+  }
+}
+
+.bg {
+  &-white {
+    &-opacity {
+      &-75 {
+        background-color: #ffffff38;
+      }
+    }
+  }
+}
+
