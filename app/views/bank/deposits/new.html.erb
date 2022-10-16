@@ -1,0 +1,29 @@
+<div class="card mx-auto text-center mt-5" style="width: 28rem;">
+  <div class="card-body">
+    <h5 class="card-title">Pronto para fazer seu depósito?</h5>
+    <h6 class="card-subtitle mb-2 text-muted mb-5">Vamos lá!</h6>
+
+    <%= simple_form_for :deposit, url: bank_deposits_path do |f| %>
+      <div class="mb-3">
+        <%= f.label :account_id, 'Conta que receberá o depósito' %>
+        <%= f.input :account_id,
+                    label: false,
+                    collection: @accounts,
+                    input_html: { class: 'form-select' },
+                    prompt: "Selecione a conta",
+                    label_method: :agency_account,
+                    value_method: :id,
+                    selected: params[:account_id] %>
+      </div>
+
+      <div class="">
+        <%= f.label :value, 'Valor' %>
+        <%= f.input :value, label: false, input_html: { type: :number, min: 1, class: 'form-control' } %>
+      </div>
+
+      <div class="d-grid mt-5">
+        <%= f.button :submit, 'Depositar', class: 'btn btn-outline-success rounded-pill', :confirm => '123' %>
+      </div>
+    <% end %>
+  </div>
+</div>

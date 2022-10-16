@@ -11,7 +11,7 @@
   </div>
 <% else  %>
   <div class="d-flex justify-content-start mt-5 flex-wrap">
-    <% @accounts.each do |course| %>
+    <% @accounts.each do |account| %>
       <div class="col-xl-6 col-md-12">
         <div class="card shadow-sm m-1">
           <div class="card-content">
@@ -20,11 +20,11 @@
                 <div class="d-flex justify-content-around col-md-8">
                   <div class="align-self-center">
                     <span class="mr-2">Saldo</span>
-                    <h1 class="mr-2"><%= course.balance %></h1>
+                    <h1 class="mr-2"><%= account.balance %></h1>
                   </div>
                   <div class="media-body ms-3">
-                    <h4>Conta: <%= course.account_number %></h4>
-                    <span>Agência: <%= course.agency %></span>
+                    <h4>Conta: <%= account.account_number %></h4>
+                    <span>Agência: <%= account.agency %></span>
                   </div>
                 </div>
                 <div class="align-self-center col-md-4 d-flex justify-content-end">
@@ -34,9 +34,9 @@
             </div>
 
             <div class="card-footer d-flex justify-content-end">
-              <%= link_to "Saque", new_user_session_url, class: "btn btn-outline-primary rounded-pill" %>
-              <%= link_to "Depósito", new_user_session_url, class: "btn btn-outline-primary rounded-pill ms-2" %>
-              <%= link_to "Extrato", new_user_session_url, class: "btn btn-outline-primary rounded-pill ms-2" %>
+              <%= button_to "Saque", new_user_session_url, class: "btn btn-outline-primary rounded-pill", disabled: !(account.balance > 0) %>
+              <%= button_to "Depósito", new_bank_deposit_path, class: "btn btn-outline-primary rounded-pill ms-2", method: :get, params: { account_id: account.id } %>
+              <%= button_to "Extrato", new_user_session_url, class: "btn btn-outline-primary rounded-pill ms-2" %>
             </div>
           </div>
         </div>

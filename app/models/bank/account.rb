@@ -12,5 +12,9 @@ module Bank
     acts_as_paranoid
 
     scope :owner, ->(user_id) { where(user_id: user_id) }
+
+    def agency_account
+      "Agência: #{agency}, Conta: #{account_number}"
+    end
   end
 end

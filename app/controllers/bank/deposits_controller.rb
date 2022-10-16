@@ -1,39 +1,22 @@
 module Bank
   class DepositsController < BaseController
     def new
-      @account = ::Bank::Transaction.new
+      @accounts = ::Bank::Account.owner(current_user.id)
     end
 
     def create
-      credit_creator = described_class.new(deposit_initialize_params)
+      credit_creator = ::Bank::CreateCreditTransaction.new(
+        account_id: deposit_initialize_params[:account_id].to_i,
+        user_id: deposit_initialize_params[:user_id].to_i
+      )
+      credit_creator.make(value: deposit_make_params[:value].to_i, nickname: deposit_make_params[:nickname])
 
-      respond_to do |format|
-        if credit_creator.make(deposit_make_params)
-          format.html do
-            redirect_to bank_account_url(credit_creator.transaction_model), notice: 'Transaction was successfully created.'
-          end
-        else
-          format.html { render :new, status: :unprocessable_entity }
-        end
-      end
-    end
-
-    def destroy
-      @account = find_by params[:id]
-
-      @account.destroy
-
-      respond_to do |format|
-        format.html { redirect_to bank_accounts_url, notice: 'Transaction was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+      redirect_to new_bank_deposit_path, notice: 'Deposit was successfully created.'
+    rescue StandardError => e
+      redirect_to new_bank_deposit_path, alert: "Ops! #{e.message}"
     end
 
     private
-
-    def find_by(id)
-      ::Bank::Transaction.deposit.find(id)
-    end
 
     def deposit_initialize_params
       params.require(:deposit)
@@ -43,7 +26,8 @@ module Bank
 
     def deposit_make_params
       params.require(:deposit)
-            .permit(:value, nickname: 'deposit')
+            .permit(:value)
+            .merge(nickname: 'deposit')
     end
   end
 end
