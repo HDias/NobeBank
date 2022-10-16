@@ -1,9 +1,10 @@
-<h1>New account</h1>
+<div class="card mx-auto text-center" style="width: 28rem;">
+  <div class="card-body">
+    <h5 class="card-title">Gostaria de criar mais uma conta?</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Vamos lá!</h6>
 
-<%= render "form", account: @account %>
-
-<br>
-
-<div>
-  <%= link_to "Back to accounts", bank_accounts_path %>
+    <div class="d-grid mt-5">
+      <%= link_to "Crie uma conta", bank_accounts_path, class: 'btn btn-outline-success rounded-pill', 'data-turbo-method': :post %>
+    </div>
+  </div>
 </div>

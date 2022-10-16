@@ -1,7 +1,7 @@
 module Bank
   class AccountsController < BaseController
     def index
-      @accounts = ::Bank::Account.all
+      @accounts = ::Bank::Account.owner(current_user.id)
     end
 
     def show
@@ -9,23 +9,16 @@ module Bank
     end
 
     def new
-      @account = ::Bank::Account.new
+      @accounts = ::Bank::Account.owner(current_user.id)
     end
 
     def create
       creator = ::Bank::CreateAccount.new(user_id: current_user.id)
+      creator.save
 
-      respond_to do |format|
-        if creator.save
-          format.html do
-            redirect_to bank_account_url(creator.account_model), notice: 'Account was successfully created.'
-          end
-          format.json { render :show, status: :created, location: creator.account_model }
-        else
-          format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: creator.account_model.errors, status: :unprocessable_entity }
-        end
-      end
+      redirect_to bank_dashboards_path, notice: 'Account was successfully created.'
+    rescue StandardError => e
+      redirect_to bank_dashboards_path, alert: "Ops! #{e.message}"
     end
 
     def destroy

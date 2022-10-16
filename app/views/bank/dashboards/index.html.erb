@@ -1,14 +1,50 @@
+<%- if @accounts.empty?  %>
+  <div class="card mx-auto text-center" style="width: 28rem;">
+    <div class="card-body">
+      <h5 class="card-title">Tudo inicia clicando abaixo.</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Vamos lá!</h6>
 
-<div class="alert alert-primary" role="alert">
-  A simple primary alert—check it out!
-</div>
+      <div class="d-grid mt-5">
+        <%= link_to "Crie sua primeira conta", bank_accounts_path, class: 'btn btn-outline-success rounded-pill', 'data-turbo-method': :post %>
+      </div>
+    </div>
+  </div>
+<% else  %>
+  <div class="d-flex justify-content-start mt-5 flex-wrap">
+    <% @accounts.each do |course| %>
+      <div class="col-xl-6 col-md-12">
+        <div class="card shadow-sm m-1">
+          <div class="card-content">
+            <div class="card-body cleartfix">
+              <div class="media align-items-stretch d-flex justify-content-between">
+                <div class="d-flex justify-content-around col-md-8">
+                  <div class="align-self-center">
+                    <span class="mr-2">Saldo</span>
+                    <h1 class="mr-2"><%= course.balance %></h1>
+                  </div>
+                  <div class="media-body ms-3">
+                    <h4>Conta: <%= course.account_number %></h4>
+                    <span>Agência: <%= course.agency %></span>
+                  </div>
+                </div>
+                <div class="align-self-center col-md-4 d-flex justify-content-end">
+                  <i class="bi bi-wallet2 sucess" style="font-size: 3rem; color: green;"></i>
+                </div>
+              </div>
+            </div>
 
-<p style="color: green"><%= notice %></p>
+            <div class="card-footer d-flex justify-content-end">
+              <%= link_to "Saque", new_user_session_url, class: "btn btn-outline-primary rounded-pill" %>
+              <%= link_to "Depósito", new_user_session_url, class: "btn btn-outline-primary rounded-pill ms-2" %>
+              <%= link_to "Extrato", new_user_session_url, class: "btn btn-outline-primary rounded-pill ms-2" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
-<% @accounts.each do |course| %>
-  <ul>
-    <li></li>
-  </ul>
-<% end.empty? and begin %>
-  <%= link_to "Crie sua primeira conta", new_bank_account_path %>
+  <div class="d-grid mt-5">
+    <%= link_to "Crie uma nova conta", bank_accounts_path, class: 'btn btn-outline-success rounded-pill', 'data-turbo-method': :post %>
+  </div>
 <% end %>
