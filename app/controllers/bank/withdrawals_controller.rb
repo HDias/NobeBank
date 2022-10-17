@@ -1,23 +1,19 @@
 module Bank
   class WithdrawalsController < BaseController
     def new
-      @account = ::Bank::Transaction.new
+      @accounts = ::Bank::Account.owner(current_user.id)
     end
 
     def create
-      creator = ::Bank::CreateTransaction.new(user_id: current_user.id)
+      credit_creator = ::Bank::CreateDebitTransaction.new(
+        account_id: withdrawal_initialize_params[:account_id].to_i,
+        user_id: withdrawal_initialize_params[:user_id].to_i
+      )
+      credit_creator.make(value: withdrawal_make_params[:value].to_i, nickname: withdrawal_make_params[:nickname])
 
-      respond_to do |format|
-        if creator.save
-          format.html do
-            redirect_to bank_account_url(creator.account_model), notice: 'Transaction was successfully created.'
-          end
-          format.json { render :show, status: :created, location: creator.account_model }
-        else
-          format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: creator.account_model.errors, status: :unprocessable_entity }
-        end
-      end
+      redirect_to new_bank_withdrawal_path(account_id: withdrawal_initialize_params[:account_id]), notice: 'Withdrawal was successfully created.'
+    rescue StandardError => e
+      redirect_to new_bank_withdrawal_path(account_id: withdrawal_initialize_params[:account_id]), alert: "Ops! #{e.message}"
     end
 
     def destroy
@@ -33,8 +29,16 @@ module Bank
 
     private
 
-    def find_by(id)
-      ::Bank::Transaction.find(id)
+    def withdrawal_initialize_params
+      params.require(:withdrawal)
+            .permit(:account_id)
+            .merge(user_id: current_user.id)
+    end
+
+    def withdrawal_make_params
+      params.require(:withdrawal)
+            .permit(:value)
+            .merge(nickname: 'withdrawal')
     end
   end
 end

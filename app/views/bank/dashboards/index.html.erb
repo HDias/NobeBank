@@ -34,7 +34,7 @@
             </div>
 
             <div class="card-footer d-flex justify-content-end">
-              <%= button_to "Saque", new_user_session_url, class: "btn btn-outline-primary rounded-pill", disabled: !(account.balance > 0) %>
+              <%= button_to "Saque", new_bank_withdrawal_path, class: "btn btn-outline-primary rounded-pill", disabled: !(account.balance > 0), method: :get, params: { account_id: account.id }%>
               <%= button_to "Depósito", new_bank_deposit_path, class: "btn btn-outline-primary rounded-pill ms-2", method: :get, params: { account_id: account.id } %>
               <%= button_to "Extrato", new_user_session_url, class: "btn btn-outline-primary rounded-pill ms-2" %>
             </div>
