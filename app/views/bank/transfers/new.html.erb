@@ -3,17 +3,12 @@
     <h5 class="card-title">Pronto para fazer sua tranferência?</h5>
     <h6 class="card-subtitle mb-2 text-muted mb-5">Vamos lá!</h6>
 
+    <h5 class="text-start"><strong>Saldo:</strong> <%= @current_account.agency_account %></h5>
+    <h5 class="text-start mb-4"><strong>Saldo:</strong> <%= @current_account.balance %></h5>
+
     <%= simple_form_for :transfer, url: bank_transfers_path do |f| %>
-      <div class="mb-3">
-        <%= f.label :from_id, 'Conta que será feita retirada para transferência' %>
-        <%= f.input :from_id,
-                    label: false,
-                    collection: [@current_account],
-                    input_html: { class: 'form-select' },
-                    label_method: :agency_account,
-                    value_method: :id,
-                    selected: @current_account.id %>
-      </div>
+
+      <%= f.input :from_id, label: false, input_html: { value: @current_account.id, type: :hidden} %>
 
       <div class="mb-3">
         <%= f.label :to_id, 'Conta que receberá a transferência' %>
