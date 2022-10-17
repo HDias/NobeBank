@@ -1,40 +1,36 @@
 module Bank
-  class TranfersController < BaseController
+  class TransfersController < BaseController
     def new
-      @account = ::Bank::Transaction.new
+      @current_account = ::Bank::Account.owner(current_user.id).find(params[:current_account_id])
+
+      @accounts = ::Bank::Account.owner(current_user.id).where.not(id: params[:current_account_id])
+    rescue StandardError => e
+      redirect_to bank_dashboards_path, alert: "Ops! #{e.message}"
     end
 
     def create
-      creator = ::Bank::CreateTransaction.new(user_id: current_user.id)
+      credit_creator = ::Bank::CreateTransferTransaction.new(
+        from_id: transfer_initialize_params[:from_id].to_i,
+        to_id: transfer_initialize_params[:to_id].to_i
+      )
+      credit_creator.make(value: transfer_make_params[:value].to_i)
 
-      respond_to do |format|
-        if creator.save
-          format.html do
-            redirect_to bank_account_url(creator.account_model), notice: 'Transaction was successfully created.'
-          end
-          format.json { render :show, status: :created, location: creator.account_model }
-        else
-          format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: creator.account_model.errors, status: :unprocessable_entity }
-        end
-      end
-    end
-
-    def destroy
-      @account = find_by params[:id]
-
-      @account.destroy
-
-      respond_to do |format|
-        format.html { redirect_to bank_accounts_url, notice: 'Transaction was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+      redirect_to new_bank_transfer_path(current_account_id: transfer_initialize_params[:from_id]), notice: 'Transfer was successfully created.'
+    rescue StandardError => e
+      redirect_to new_bank_transfer_path(current_account_id: transfer_initialize_params[:from_id]), alert: "Ops! #{e.message}"
     end
 
     private
 
-    def find_by(id)
-      ::Bank::Transaction.find(id)
+    def transfer_initialize_params
+      params.require(:transfer)
+            .permit(:from_id, :to_id)
+    end
+
+    def transfer_make_params
+      params.require(:transfer)
+            .permit(:value)
+            .merge(nickname: 'transfer')
     end
   end
 end

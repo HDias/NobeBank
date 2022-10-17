@@ -1,0 +1,40 @@
+<div class="card mx-auto text-center mt-5" style="width: 28rem;">
+  <div class="card-body">
+    <h5 class="card-title">Pronto para fazer sua tranferência?</h5>
+    <h6 class="card-subtitle mb-2 text-muted mb-5">Vamos lá!</h6>
+
+    <%= simple_form_for :transfer, url: bank_transfers_path do |f| %>
+      <div class="mb-3">
+        <%= f.label :from_id, 'Conta que será feita retirada para transferência' %>
+        <%= f.input :from_id,
+                    label: false,
+                    collection: [@current_account],
+                    input_html: { class: 'form-select' },
+                    label_method: :agency_account,
+                    value_method: :id,
+                    selected: @current_account.id %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :to_id, 'Conta que receberá a transferência' %>
+        <%= f.input :to_id,
+                    label: false,
+                    collection: @accounts,
+                    input_html: { class: 'form-select' },
+                    prompt: "Selecione a conta",
+                    label_method: :agency_account,
+                    value_method: :id,
+                    selected: params[:to_id] %>
+      </div>
+
+      <div class="">
+        <%= f.label :value, 'Valor' %>
+        <%= f.input :value, label: false, input_html: { type: :number, min: 1, class: 'form-control' } %>
+      </div>
+
+      <div class="d-grid mt-5">
+        <%= f.button :submit, 'Transferir', class: 'btn btn-outline-success rounded-pill' %>
+      </div>
+    <% end %>
+  </div>
+</div>

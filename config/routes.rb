@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :accounts, except: %i[edit update]
     resources :dashboards, only: %i[index]
     resources :deposits, only: %i[new create]
+    resources :transfers, only: %i[new create]
     resources :withdrawals, only: %i[new create]
   end
 

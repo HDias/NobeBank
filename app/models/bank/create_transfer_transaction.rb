@@ -8,8 +8,8 @@ module Bank
       raise ArgumentError, "from_id should be 'Integer'" unless from_id.is_a?(Integer)
       raise ArgumentError, "to_id should be 'Integer'" unless to_id.is_a?(Integer)
 
-      @from_id        = from_id
-      @to_id          = to_id
+      @from_id = from_id
+      @to_id   = to_id
     end
 
     def make(value:)
