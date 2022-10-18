@@ -1,13 +1,5 @@
 module Bank
   class AccountsController < BaseController
-    def index
-      @accounts = ::Bank::Account.owner(current_user.id)
-    end
-
-    def show
-      @account = find_by params[:id]
-    end
-
     def create
       creator = ::Bank::CreateAccount.new(user_id: current_user.id)
       creator.save
@@ -22,16 +14,15 @@ module Bank
 
       @account.destroy
 
-      respond_to do |format|
-        format.html { redirect_to bank_accounts_url, notice: 'Account was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+      redirect_to bank_dashboards_path
+    rescue StandardError => e
+      redirect_to bank_dashboards_path, alert: "Ops! #{e.message}"
     end
 
     private
 
     def find_by(id)
-      ::Bank::Account.find(id)
+      ::Bank::Account.owner(current_user.id).find(id)
     end
   end
 end

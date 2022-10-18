@@ -38,6 +38,7 @@
               <%= button_to "Depósito", new_bank_deposit_path, class: "btn btn-outline-primary rounded-pill ms-2", method: :get, params: { account_id: account.id } %>
               <%= button_to "Transferência", new_bank_transfer_path, class: "btn btn-outline-primary rounded-pill ms-2", disabled: account.balance.zero?, method: :get, params: { current_account_id: account.id } %>
               <%= button_to "Extrato", bank_statements_path, class: "btn btn-outline-primary rounded-pill ms-2", method: :get, params: { current_account_id: account.id } %>
+              <%= button_to 'Encerrar', bank_account_path(account), class: 'btn btn-outline-danger rounded-pill ms-2', onclick: "return confirm('Tem certeza disso? Posso perguntar? Má ôee!')", method: :delete %>
             </div>
           </div>
         </div>
