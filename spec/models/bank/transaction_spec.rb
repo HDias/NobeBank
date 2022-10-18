@@ -31,7 +31,7 @@ RSpec.describe ::Bank::Transaction, type: :model do
     end
 
     # value
-    specify { is_expected.to validate_numericality_of(:value).is_greater_than(0) }
+    specify { is_expected.to validate_numericality_of(:value) }
     specify { is_expected.to validate_presence_of(:value) }
 
     specify { is_expected.to validate_length_of(:description).is_at_most(255) }
