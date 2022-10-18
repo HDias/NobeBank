@@ -362,6 +362,7 @@ DEPENDENCIES
   rubocop (~> 1.32)
   selenium-webdriver
   shoulda-matchers (~> 5.0)
+  simple_form
   simplecov
   solargraph
   spring

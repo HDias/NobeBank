@@ -2,7 +2,6 @@ module Bank
   class DepositsController < BaseController
     def new
       @accounts = ::Bank::Account.owner(current_user.id)
-
     rescue StandardError => e
       redirect_to bank_dashboards_path, alert: "Ops! #{e.message}"
     end

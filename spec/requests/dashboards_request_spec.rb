@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ::Bank::DashboardsController, type: :request do
   describe 'GET .index' do
     context 'not loged' do
-      it 'redirect do root_path' do
+      it 'redirect do login path' do
         create(:bank_account)
 
         get bank_dashboards_url
