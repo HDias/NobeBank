@@ -354,7 +354,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   paranoia (= 2.6.0)
-  pg
+  pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4)
   rails_db (>= 2.3.1)
