@@ -51,10 +51,6 @@ GEM
       globalid (>= 0.3.6)
     activemodel (7.0.4)
       activesupport (= 7.0.4)
-    activemodel-serializers-xml (1.0.2)
-      activemodel (> 5.x)
-      activesupport (> 5.x)
-      builder (~> 3.1)
     activerecord (7.0.4)
       activemodel (= 7.0.4)
       activesupport (= 7.0.4)
@@ -109,13 +105,6 @@ GEM
       devise (>= 4.8.0)
     diff-lcs (1.5.0)
     docile (1.4.0)
-    draper (4.0.2)
-      actionpack (>= 5.0)
-      activemodel (>= 5.0)
-      activemodel-serializers-xml (>= 1.0)
-      activesupport (>= 5.0)
-      request_store (>= 1.0)
-      ruby2_keywords
     e2mmap (0.1.0)
     erubi (1.11.0)
     factory_bot (6.2.1)
@@ -183,6 +172,7 @@ GEM
       activerecord (>= 5.1, < 7.1)
     parser (3.1.2.1)
       ast (~> 2.4.1)
+    pg (1.4.4)
     public_suffix (5.0.0)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -232,8 +222,6 @@ GEM
     regexp_parser (2.6.0)
     reline (0.3.1)
       io-console (~> 0.5)
-    request_store (1.5.1)
-      rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -270,7 +258,6 @@ GEM
     rubocop-ast (1.21.0)
       parser (>= 3.1.1.0)
     ruby-progressbar (1.11.0)
-    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.5.0)
       childprocess (>= 0.5, < 5.0)
@@ -313,7 +300,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.5.3-x86_64-linux)
     stimulus-rails (1.1.0)
       railties (>= 6.0.0)
     terminal-table (3.0.2)
@@ -363,12 +349,12 @@ DEPENDENCIES
   devise
   devise-bootstrap5
   devise-i18n
-  draper
   factory_bot_rails
   faker
   jbuilder
   jsbundling-rails
   paranoia (= 2.6.0)
+  pg
   puma (~> 5.0)
   rails (~> 7.0.4)
   rails_db (>= 2.3.1)
@@ -381,7 +367,6 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   sprockets-rails
-  sqlite3 (~> 1.4)
   stimulus-rails
   turbo-rails
   tzinfo-data

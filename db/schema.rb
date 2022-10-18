@@ -11,11 +11,14 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2022_10_12_142741) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "bank_accounts", force: :cascade do |t|
     t.integer "account_number", null: false
     t.string "agency", null: false
     t.integer "balance", default: 0, null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -30,8 +33,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_12_142741) do
     t.string "nickname", null: false
     t.string "status", null: false
     t.integer "value", null: false
-    t.integer "bank_account_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "bank_account_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bank_account_id"], name: "index_bank_transactions_on_bank_account_id"
