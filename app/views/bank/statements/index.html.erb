@@ -13,15 +13,16 @@
     <div class="card mx-auto mt-5">
       <div class="card-header">
 
-       <%= simple_form_for :deposit, url: bank_deposits_path do |f| %>
+       <%= simple_form_for :statement, url: bank_statements_path, method: :get, data: { turbo: false } do |f| %>
         <div class="row">
+          <input type="hidden" name="current_account_id" value="<%= @current_account.id %>">
           <div class="col-md-3">
             <%= f.label :start_date, 'Data Inicial' %>
-            <%= f.input :start_date, label: false, input_html: { type: :date, class: 'form-control' } %>
+            <%= f.input :start_date, label: false, input_html: { value: params.dig(:statement, :start_date), type: :date, class: 'form-control' } %>
           </div>
           <div class="col-md-3">
-            <%= f.label :start_date, 'Data Final' %>
-            <%= f.input :start_date, label: false, input_html: { type: :date, class: 'form-control' } %>
+            <%= f.label :end_date, 'Data Final' %>
+            <%= f.input :end_date, label: false, input_html: { value: params.dig(:statement, :end_date), type: :date, class: 'form-control' } %>
           </div>
           <div class="col-md-3 d-flex align-items-end">
             <%= f.button :submit, 'Gerar Extrato', class: 'btn btn-outline-primary rounded-pill' %>
@@ -31,27 +32,37 @@
       </div>
 
       <div class="card-body">
-        <% if @statements.empty? %>
+        <% if @report_transaction.transactions.empty? %>
           <div class="alert alert-light" role="alert">
             Selecione a data Inicial e Final antes de gerar o extrato.
           </div>
         <% else %>
+
+        <div class="alert alert-light" role="alert">
+          <h4><strong>Saldo Final do Período:</strong> <%= @report_transaction.final_balance %></h4>
+        </div>
+
         <table class="table">
           <thead>
             <tr>
               <th scope="col">Data</th>
               <th scope="col">Tipo</th>
-              <th scope="col"></th>
+              <th scope="col">Valor</th>
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
+            <% @report_transaction.transactions.each do |transaction| %>
+              <tr class="<%= transaction.debit_kind? ? 'table-danger' : 'table-success' %>">
+                <th scope="row"><%= transaction.created_at %></th>
+                <td>
+                  <%= transaction.nickname %>
+                  <%= transaction.kind %>
+                </td>
+                <td><%= transaction.value %></td>
+                <td></td>
+              </tr>
+            <% end %>
           </tbody>
         </table>
         <% end %>

@@ -8,10 +8,6 @@ module Bank
       @account = find_by params[:id]
     end
 
-    def new
-      @accounts = ::Bank::Account.owner(current_user.id)
-    end
-
     def create
       creator = ::Bank::CreateAccount.new(user_id: current_user.id)
       creator.save

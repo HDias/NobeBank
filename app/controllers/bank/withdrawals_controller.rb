@@ -2,6 +2,8 @@ module Bank
   class WithdrawalsController < BaseController
     def new
       @accounts = ::Bank::Account.owner(current_user.id)
+    rescue StandardError => e
+      redirect_to bank_dashboards_path, alert: "Ops! #{e.message}"
     end
 
     def create
@@ -14,17 +16,6 @@ module Bank
       redirect_to new_bank_withdrawal_path(account_id: withdrawal_initialize_params[:account_id]), notice: 'Withdrawal was successfully created.'
     rescue StandardError => e
       redirect_to new_bank_withdrawal_path(account_id: withdrawal_initialize_params[:account_id]), alert: "Ops! #{e.message}"
-    end
-
-    def destroy
-      @account = find_by params[:id]
-
-      @account.destroy
-
-      respond_to do |format|
-        format.html { redirect_to bank_accounts_url, notice: 'Transaction was successfully destroyed.' }
-        format.json { head :no_content }
-      end
     end
 
     private
