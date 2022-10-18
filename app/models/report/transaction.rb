@@ -13,10 +13,9 @@ module Report
     def generate(transaction_model = ::Bank::Transaction)
       @transaction_model ||= transaction_model
 
-      final_balance_sum
+      transacations
 
-      @transactions = @transaction_model.where(bank_account_id: account_id).group(:created_at)
-                                        .where(created_at: time_range)
+      final_balance_sum
     end
 
     def final_balance_sum
@@ -24,15 +23,18 @@ module Report
                                        .where('created_at < ?', start_date.to_date.beginning_of_day)
                                        .sum(:value)
 
-      range_balance = @transaction_model.where(bank_account_id: account_id)
-                                        .where(created_at: time_range)
-                                        .sum(:value)
+      range_balance = @transactions.sum(:value)
 
       @final_balance = last_balance + range_balance
     end
 
     def time_range
       start_date.to_date.beginning_of_day..end_date.to_date.end_of_day
+    end
+
+    def transacations
+      @transactions = @transaction_model.where(bank_account_id: account_id)
+                                        .where(created_at: time_range)
     end
   end
 end
