@@ -16,7 +16,7 @@ module Bank
       credit_creator.make(value: transfer_make_params[:value].to_i)
 
       redirect_to new_bank_transfer_path(current_account_id: transfer_initialize_params[:from_id]),
-                  notice: 'Transfer was successfully created.'
+                  notice: 'Oba! Transferência realizada com sucesso!'
     rescue StandardError => e
       redirect_to new_bank_transfer_path(
         current_account_id: transfer_initialize_params[:from_id],

@@ -3,7 +3,7 @@
     <div class="card mx-auto text-center mt-5">
       <div class="card-body">
 
-        <h5 class="text-start"><strong>Saldo:</strong> <%= @current_account.agency_account %></h5>
+        <h5 class="text-start"><%= @current_account.agency_account %></h5>
         <h5 class="text-start mb-4"><strong>Saldo:</strong> <%= @current_account.balance %></h5>
 
       </div>
@@ -22,7 +22,7 @@
           </div>
           <div class="col-md-3">
             <%= f.label :end_date, 'Data Final' %>
-            <%= f.input :end_date, label: false, input_html: { value: params.dig(:statement, :end_date), type: :date, class: 'form-control' } %>
+            <%= f.input :end_date, label: false, input_html: { value: params.dig(:statement, :end_date), type: :date, class: 'form-control', max: Date.current } %>
           </div>
           <div class="col-md-3 d-flex align-items-end">
             <%= f.button :submit, 'Gerar Extrato', class: 'btn btn-outline-primary rounded-pill' %>

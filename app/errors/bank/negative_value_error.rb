@@ -1,6 +1,6 @@
 module Bank
   class NegativeValueError < ArgumentError
-    def initialize(msg = 'Transaction value should be positive')
+    def initialize(msg = 'Somente valores positivos!')
       super
     end
   end

@@ -14,7 +14,7 @@ module Bank
       )
       credit_creator.make(value: deposit_make_params[:value].to_i, nickname: deposit_make_params[:nickname])
 
-      redirect_to new_bank_deposit_path, notice: 'Deposit was successfully created.'
+      redirect_to new_bank_deposit_path, notice: 'Oba! Depósito realizado com sucesso!'
     rescue StandardError => e
       redirect_to new_bank_deposit_path, alert: "Ops! #{e.message}"
     end

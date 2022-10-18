@@ -4,7 +4,7 @@ module Bank
       creator = ::Bank::CreateAccount.new(user_id: current_user.id)
       creator.save
 
-      redirect_to bank_dashboards_path, notice: 'Account was successfully created.'
+      redirect_to bank_dashboards_path, notice: 'Oba! Conta criada com sucesso! Aproveite!'
     rescue StandardError => e
       redirect_to bank_dashboards_path, alert: "Ops! #{e.message}"
     end
@@ -14,7 +14,7 @@ module Bank
 
       @account.destroy
 
-      redirect_to bank_dashboards_path
+      redirect_to bank_dashboards_path, notice: 'Que pena! Sua conta foi encerrada!'
     rescue StandardError => e
       redirect_to bank_dashboards_path, alert: "Ops! #{e.message}"
     end
