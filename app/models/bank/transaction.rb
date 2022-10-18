@@ -24,5 +24,8 @@ module Bank
       in: ['deposit'],
       message: 'deposit is not valid to debit transaction'
     }, if: -> { debit_kind? }
+
+    scope :less_than_date, ->(account_id, limit_date) { where(bank_account_id: account_id).where('created_at < ?', limit_date).sum(:value) }
+    scope :by_range, ->(account_id, date_range) { where(bank_account_id: account_id).where(created_at: date_range) }
   end
 end
