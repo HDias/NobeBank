@@ -39,7 +39,7 @@ module Bank
       @transaction_model.status           = status
       @transaction_model.nickname         = nickname
       @transaction_model.description      = description
-      @transaction_model.value            = value
+      @transaction_model.value            = -value
       @transaction_model.bank_account_id  = @account_id
       @transaction_model.user_id          = @user_id
 

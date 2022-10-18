@@ -11,7 +11,7 @@ module Bank
     validates :status,  presence: true
     validates :value,   presence: true
 
-    validates :value, numericality: { only_integer: true, greater_than: 0 }
+    validates :value, numericality: { only_integer: true }
 
     validates :description, length: { maximum: 255 }
 

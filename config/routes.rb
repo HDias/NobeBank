@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :dashboards, only: %i[index]
     resources :deposits, only: %i[new create]
     resources :transfers, only: %i[new create]
+    resources :statements, only: %i[index]
     resources :withdrawals, only: %i[new create]
   end
 

@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-3">
+    <div class="card mx-auto text-center mt-5">
+      <div class="card-body">
+
+        <h5 class="text-start"><strong>Saldo:</strong> <%= @current_account.agency_account %></h5>
+        <h5 class="text-start mb-4"><strong>Saldo:</strong> <%= @current_account.balance %></h5>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="card mx-auto mt-5">
+      <div class="card-header">
+
+       <%= simple_form_for :deposit, url: bank_deposits_path do |f| %>
+        <div class="row">
+          <div class="col-md-3">
+            <%= f.label :start_date, 'Data Inicial' %>
+            <%= f.input :start_date, label: false, input_html: { type: :date, class: 'form-control' } %>
+          </div>
+          <div class="col-md-3">
+            <%= f.label :start_date, 'Data Final' %>
+            <%= f.input :start_date, label: false, input_html: { type: :date, class: 'form-control' } %>
+          </div>
+          <div class="col-md-3 d-flex align-items-end">
+            <%= f.button :submit, 'Gerar Extrato', class: 'btn btn-outline-primary rounded-pill' %>
+          </div>
+        </div>
+       <% end %>
+      </div>
+
+      <div class="card-body">
+        <% if @statements.empty? %>
+          <div class="alert alert-light" role="alert">
+            Selecione a data Inicial e Final antes de gerar o extrato.
+          </div>
+        <% else %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Data</th>
+              <th scope="col">Tipo</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+          </tbody>
+        </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
