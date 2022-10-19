@@ -1,8 +1,8 @@
-##Home
+## Home
 
 ![HOME](docs/images/home.png)
 
-##Dashboard
+## Dashboard
 
 ![Dash](docs/images/dash.png)
 
