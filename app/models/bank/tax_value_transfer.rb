@@ -3,11 +3,11 @@ module Bank
     def get(value:, time: Time.now)
       tax = 0
 
-      busines_hours?(time) ? 5 : 7
+      tax += busines_hours?(time) ? 5 : 7
 
-      # tax = busines_hours?(time) ? 5 : 7
+      tax += 10 if value > 1000
 
-      # tax =~ 10 if value > 1000
+      tax
     end
 
     def busines_hours?(time)
