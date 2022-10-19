@@ -1,6 +1,7 @@
 module Bank
   class CreateTransferTransaction
     KIND = 'credit'.freeze
+    NICKNAME = 'transfer'.freeze
 
     attr_reader :transaction_model
 
@@ -24,10 +25,10 @@ module Bank
       raise ::Bank::NegativeValueError if value <= 0
 
       debit_creator = ::Bank::CreateDebitTransaction.new(account_id: @from_id, user_id: debit_account_user_id)
-      debit_creator.make(value:, nickname: 'transfer')
+      debit_creator.make(value:, nickname: NICKNAME)
 
       credit_creator = ::Bank::CreateCreditTransaction.new(account_id: @to_id, user_id: debit_account_user_id)
-      credit_creator.make(value:, nickname: 'transfer')
+      credit_creator.make(value:, nickname: NICKNAME)
     end
 
     def debit_account_user_id
