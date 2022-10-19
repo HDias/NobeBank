@@ -57,8 +57,10 @@
               <tr class="<%= transaction.debit_kind? ? 'table-danger' : 'table-success' %>">
                 <th scope="row"><%= I18n.l(transaction.created_at, format: :short_pt_BR) %></th>
                 <td>
-                  <p><%= I18n.t(".activerecord.transaction.nickname.#{transaction.nickname.downcase}") %></p>
-                  <small><%= I18n.t(".activerecord.transaction.kind.#{transaction.kind.downcase}") %></small>
+                  <span class="badge text-bg-dark"><%= I18n.t(".activerecord.transaction.kind.#{transaction.kind.downcase}") %></span>
+                  <p>
+                    <%= I18n.t(".activerecord.transaction.nickname.#{transaction.nickname.downcase}") %>:
+                  </p>
                 </td>
                 <td><%= transaction.value %></td>
                 <td></td>

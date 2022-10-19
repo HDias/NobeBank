@@ -37,6 +37,7 @@ pt-BR:
         deposit: 'depósito'
         withdrawal: 'saque'
         transfer: 'transferência'
+        tax: 'taxa de transferência'
   date:
     abbr_day_names:
     - dom
