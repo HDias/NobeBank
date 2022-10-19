@@ -13,9 +13,13 @@ module Bank
       )
       credit_creator.make(value: withdrawal_make_params[:value].to_i, nickname: withdrawal_make_params[:nickname])
 
-      redirect_to new_bank_withdrawal_path(account_id: withdrawal_initialize_params[:account_id]), notice: 'Withdrawal was successfully created.'
+      redirect_to new_bank_withdrawal_path(
+        account_id: withdrawal_initialize_params[:account_id]
+      ), notice: 'Withdrawal was successfully created.'
     rescue StandardError => e
-      redirect_to new_bank_withdrawal_path(account_id: withdrawal_initialize_params[:account_id]), alert: "Ops! #{e.message}"
+      redirect_to new_bank_withdrawal_path(
+        account_id: withdrawal_initialize_params[:account_id]
+      ), alert: "Ops! #{e.message}"
     end
 
     private
