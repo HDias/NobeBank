@@ -47,7 +47,7 @@
           <thead>
             <tr>
               <th scope="col">Data</th>
-              <th scope="col">Tipo</th>
+              <th scope="col">Detalhes</th>
               <th scope="col">Valor</th>
               <th scope="col"></th>
             </tr>
@@ -55,12 +55,17 @@
           <tbody>
             <% @report_transaction.transactions.each do |transaction| %>
               <tr class="<%= transaction.debit_kind? ? 'table-danger' : 'table-success' %>">
-                <th scope="row"><%= I18n.l(transaction.created_at, format: :short_pt_BR) %></th>
+                <td >
+                  <%= I18n.l(transaction.created_at, format: :short_pt_BR) %>
+                </td>
                 <td>
                   <span class="badge text-bg-dark"><%= I18n.t(".activerecord.transaction.kind.#{transaction.kind.downcase}") %></span>
                   <p>
                     <%= I18n.t(".activerecord.transaction.nickname.#{transaction.nickname.downcase}") %>:
                   </p>
+                  <small>
+                    Feito por: <%= transaction.user.name %>:
+                  </small>
                 </td>
                 <td><%= transaction.value %></td>
                 <td></td>
