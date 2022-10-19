@@ -18,11 +18,11 @@
           <input type="hidden" name="current_account_id" value="<%= @current_account.id %>">
           <div class="col-md-3">
             <%= f.label :start_date, 'Data Inicial' %>
-            <%= f.input :start_date, label: false, input_html: { value: params.dig(:statement, :start_date), type: :date, class: 'form-control' } %>
+            <%= f.input :start_date, label: false, input_html: { value: params.dig(:statement, :start_date) || Date.today, type: :date, class: 'form-control' } %>
           </div>
           <div class="col-md-3">
             <%= f.label :end_date, 'Data Final' %>
-            <%= f.input :end_date, label: false, input_html: { value: params.dig(:statement, :end_date), type: :date, class: 'form-control', max: Date.current } %>
+            <%= f.input :end_date, label: false, input_html: { value: params.dig(:statement, :end_date) || Date.today, type: :date, class: 'form-control', max: Date.today } %>
           </div>
           <div class="col-md-3 d-flex align-items-end">
             <%= f.button :submit, 'Gerar Extrato', class: 'btn btn-outline-primary rounded-pill' %>
@@ -34,7 +34,8 @@
       <div class="card-body">
         <% if @report_transaction.transactions.empty? %>
           <div class="alert alert-light" role="alert">
-            Selecione a data Inicial e Final antes de gerar o extrato.
+            Selecione a data Inicial e Final antes de gerar o extrato. <br />
+            Todas as transações são realizadas no time zone UTC
           </div>
         <% else %>
 
@@ -54,10 +55,10 @@
           <tbody>
             <% @report_transaction.transactions.each do |transaction| %>
               <tr class="<%= transaction.debit_kind? ? 'table-danger' : 'table-success' %>">
-                <th scope="row"><%= transaction.created_at %></th>
+                <th scope="row"><%= I18n.l(transaction.created_at, format: :short_pt_BR) %></th>
                 <td>
-                  <%= transaction.nickname %>
-                  <%= transaction.kind %>
+                  <p><%= I18n.t(".activerecord.transaction.nickname.#{transaction.nickname.downcase}") %></p>
+                  <small><%= I18n.t(".activerecord.transaction.kind.#{transaction.kind.downcase}") %></small>
                 </td>
                 <td><%= transaction.value %></td>
                 <td></td>

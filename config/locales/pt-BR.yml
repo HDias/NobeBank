@@ -29,6 +29,14 @@ pt-BR:
         password:
           password_strength: "Essa senha é muito utilizada! Poderia criar outra?"
           password_caracter: "Deve conter pelo menos 1 caractere especial, 1 letra maiúscula e 1 número."
+    transaction:
+      kind:
+        credit: 'crédito'
+        debit: 'débito'
+      nickname:
+        deposit: 'depósito'
+        withdrawal: 'saque'
+        transfer: 'transferência'
   date:
     abbr_day_names:
     - dom
