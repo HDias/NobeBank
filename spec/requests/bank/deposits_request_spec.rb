@@ -4,8 +4,6 @@ RSpec.describe ::Bank::DepositsController, type: :request do
   describe 'GET .new' do
     context 'not loged' do
       specify do
-        create(:bank_account)
-
         get new_bank_deposit_url
 
         expect(response).to redirect_to(new_user_session_path)

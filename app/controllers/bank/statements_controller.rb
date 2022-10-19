@@ -11,7 +11,7 @@ module Bank
 
       @report_transaction.generate
     rescue StandardError => e
-      redirect_to bank_dashboards_path, alert: "Ops! #{e.message}"
+      redirect_to bank_dashboards_url, alert: "Ops! #{e.message}"
     end
 
     private

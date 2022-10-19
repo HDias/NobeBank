@@ -4,8 +4,6 @@ RSpec.describe ::Bank::DashboardsController, type: :request do
   describe 'GET .index' do
     context 'not loged' do
       it 'redirect do login path' do
-        create(:bank_account)
-
         get bank_dashboards_url
 
         expect(response).to redirect_to(new_user_session_path)

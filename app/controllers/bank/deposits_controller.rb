@@ -3,7 +3,7 @@ module Bank
     def new
       @accounts = ::Bank::Account.owner(current_user.id)
     rescue StandardError => e
-      redirect_to bank_dashboards_path, alert: "Ops! #{e.message}"
+      redirect_to bank_dashboards_url, alert: "Ops! #{e.message}"
     end
 
     def create
@@ -13,9 +13,9 @@ module Bank
       )
       credit_creator.make(value: deposit_make_params[:value].to_i, nickname: deposit_make_params[:nickname])
 
-      redirect_to new_bank_deposit_path, notice: 'Oba! Depósito realizado com sucesso!'
+      redirect_to new_bank_deposit_url, notice: 'Oba! Depósito realizado com sucesso!'
     rescue StandardError => e
-      redirect_to new_bank_deposit_path, alert: "Ops! #{e.message}"
+      redirect_to new_bank_deposit_url, alert: "Ops! #{e.message}"
     end
 
     private

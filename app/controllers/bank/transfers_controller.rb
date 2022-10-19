@@ -5,7 +5,7 @@ module Bank
 
       @accounts = ::Bank::Account.owner(current_user.id).where.not(id: params[:current_account_id])
     rescue StandardError => e
-      redirect_to bank_dashboards_path, alert: "Ops! #{e.message}"
+      redirect_to bank_dashboards_url, alert: "Ops! #{e.message}"
     end
 
     def create
@@ -15,10 +15,10 @@ module Bank
       )
       credit_creator.make(value: transfer_make_params[:value].to_i)
 
-      redirect_to new_bank_transfer_path(current_account_id: transfer_initialize_params[:from_id]),
+      redirect_to new_bank_transfer_url(current_account_id: transfer_initialize_params[:from_id]),
                   notice: 'Oba! Transferência realizada com sucesso!'
     rescue StandardError => e
-      redirect_to new_bank_transfer_path(
+      redirect_to new_bank_transfer_url(
         current_account_id: transfer_initialize_params[:from_id],
         to_id: params[:to_id]
       ), alert: "Ops! #{e.message}"

@@ -3,7 +3,7 @@ module Bank
     def new
       @accounts = ::Bank::Account.owner(current_user.id)
     rescue StandardError => e
-      redirect_to bank_dashboards_path, alert: "Ops! #{e.message}"
+      redirect_to bank_dashboards_url, alert: "Ops! #{e.message}"
     end
 
     def create
@@ -13,11 +13,11 @@ module Bank
       )
       credit_creator.make(value: withdrawal_make_params[:value].to_i, nickname: withdrawal_make_params[:nickname])
 
-      redirect_to new_bank_withdrawal_path(
+      redirect_to new_bank_withdrawal_url(
         account_id: withdrawal_initialize_params[:account_id]
       ), notice: 'Withdrawal was successfully created.'
     rescue StandardError => e
-      redirect_to new_bank_withdrawal_path(
+      redirect_to new_bank_withdrawal_url(
         account_id: withdrawal_initialize_params[:account_id]
       ), alert: "Ops! #{e.message}"
     end
