@@ -50,46 +50,54 @@ RSpec.describe ::Bank::TransfersController, type: :request do
 
     context 'loged with balance' do
       context 'with valid parameters' do
+        def get_tax(value:)
+          calculator = ::Bank::TaxValueTransfer.new
+
+          calculator.get(value:)
+        end
+
         def transfer_params(from_id:, to_id:, value:)
           { transfer: { from_id:, to_id:, value: } }
         end
 
         it 'creates a new transfer transaction in your own account' do
           user    = create(:user)
-          from_id = create(:bank_account, user:, balance: 11).id
+          from_id = create(:bank_account, user:, balance: 18).id
           to_id   = create(:bank_account, user:).id
-          value   = rand(1..10)
+          value   = 1
 
           custom_sign_in create(:user)
 
           expect do
             post bank_transfers_url(transfer_params(from_id:, to_id:, value:))
           end.to change(::Bank::Transaction.transfer, :count).by(2)
+             .and change(::Bank::Transaction.tax, :count).by(1)
              .and change(::Bank::Transaction.credit_kind, :count).by(1)
-             .and change(::Bank::Transaction.debit_kind, :count).by(1)
+             .and change(::Bank::Transaction.debit_kind, :count).by(2)
         end
 
         it 'update two own account balances with new value' do
           user         = create(:user)
-          from_account = create(:bank_account, user:, balance: 11)
+          from_account = create(:bank_account, user:, balance: 18)
           to_account   = create(:bank_account, user:)
-          value        = rand(1..10)
+          value        = 1
 
           custom_sign_in create(:user)
           post bank_transfers_url(transfer_params(from_id: from_account.id, to_id: to_account.id, value:))
 
           old_from_balance = from_account.balance
           old_to_balance   = to_account.balance
+          to_account_balanceless_tax = old_from_balance - get_tax(value:)
 
-          expect(from_account.reload.balance).to eq(old_from_balance - value)
+          expect(from_account.reload.balance).to eq(to_account_balanceless_tax - value)
           expect(to_account.reload.balance).to eq(old_to_balance + value)
         end
 
         it 'redirects to the transfer transaction' do
           user         = create(:user)
-          from_account = create(:bank_account, user:, balance: 11)
+          from_account = create(:bank_account, user:, balance: 18)
           to_account   = create(:bank_account, user:)
-          value        = rand(1..10)
+          value        = 1
 
           custom_sign_in create(:user)
           post bank_transfers_url(transfer_params(from_id: from_account.id, to_id: to_account.id, value:))

@@ -24,6 +24,11 @@ module Bank
     def make_transfer(value)
       raise ::Bank::NegativeValueError if value <= 0
 
+      tax_value_transfer = ::Bank::TaxValueTransfer.new
+      tax_value = tax_value_transfer.get(value:)
+      debit_creator = ::Bank::CreateDebitTransaction.new(account_id: @from_id, user_id: debit_account_user_id)
+      debit_creator.make(value: tax_value, nickname: 'tax')
+
       debit_creator = ::Bank::CreateDebitTransaction.new(account_id: @from_id, user_id: debit_account_user_id)
       debit_creator.make(value:, nickname: NICKNAME)
 

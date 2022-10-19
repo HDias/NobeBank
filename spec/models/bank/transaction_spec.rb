@@ -8,7 +8,8 @@ RSpec.describe ::Bank::Transaction, type: :model do
       is_expected.to define_enum_for(:nickname).with_values(
         deposit: 'deposit',
         withdrawal: 'withdrawal',
-        transfer: 'transfer'
+        transfer: 'transfer',
+        tax: 'tax'
       ).backed_by_column_of_type(:string)
     end
 

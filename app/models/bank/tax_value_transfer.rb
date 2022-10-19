@@ -1,9 +1,7 @@
 module Bank
   class TaxValueTransfer
     def get(value:, time: Time.now)
-      tax = 0
-
-      tax += busines_hours?(time) ? 5 : 7
+      tax = busines_hours?(time) ? 5 : 7
 
       tax += 10 if value > 1000
 
