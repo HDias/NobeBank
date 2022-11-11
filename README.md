@@ -8,11 +8,6 @@
 
 ## README
 
-[LINK DEMO](https://nobebank-brasil.herokuapp.com/)
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
 Things you may want to cover:
 
 #### Ruby version
@@ -36,4 +31,6 @@ Things you may want to cover:
  - run all tests: `bin/rspec`
  - run tests in documentation format: `bin/rspec --format documentation`
 
-* ...
+### DEMO
+
+[LINK DEMO](https://nobebank-brasil.herokuapp.com/)
